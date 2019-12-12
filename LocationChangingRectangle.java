@@ -30,6 +30,7 @@ public class LocationChangingRectangle extends LocationChangingShape{
 		Point pp = sh.getLocation();
 		Color cc = sh.getColor();
 		System.out.println("point , color are : " + pp.toString() + cc.toString());
+		System.out.println("Dimension : " + sh.getBounds().toString());
 	}
 	
 	public LocationChangingRectangle(Point location, Color color) {

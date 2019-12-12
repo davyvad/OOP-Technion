@@ -3,7 +3,6 @@ package homework1;
 import java.awt.*;
 import java.util.Random;
 
-
 /**
  * A LocationChaningShape is a Shape that can change its location using its step()
  * method. A LocationChaningShape has a velocity property that determines the speed
@@ -17,6 +16,9 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
 	private int velocityY_;
 	private Rectangle boundRec_;
 	
+	private static final int DEFAULT_WIDTH = 30;
+	private static final int DEFAULT_HEIGHT = 30;
+
 	// TODO: Write Abstraction Function:
 	//			represents a Shape which has a location, a color, a size (a bounding rectangle), a shape
 	//			and has X and Y velocities : velocityX, velocityY
@@ -39,7 +41,7 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
 		super(location, color);
 		
 		if(location == null || color == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("location or color == null");
 		}
 		Random rdm = new Random();
 		int[] arr = {0,0};
@@ -48,8 +50,11 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
 		} while (arr[0]== 0 || arr[1] ==0);
 		velocityX_ = arr[0];
 		velocityY_ = arr[1];
-    
-    }
+		
+		//Set shape dimension:
+		boundRec_ = new Rectangle(location.x , location.y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		
+		}
 
 
     /**
@@ -160,5 +165,6 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
     private void checkRep() {
     	assert getColor() != null;
     	assert getLocation() != null;
+    	assert boundRec_ !=null;
     }
 }

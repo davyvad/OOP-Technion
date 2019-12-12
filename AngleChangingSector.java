@@ -49,13 +49,15 @@ public class AngleChangingSector extends Shape implements Animatable {
 		this.sectorAngle = sectorAngle; 
 		//Set shape dimension:
 		boundRec_ = new Rectangle(location.x , location.y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		
+		checkRep();
 		}
 
     public void draw(Graphics g) {
+    	checkRep();
     	g = (Graphics2D) g;
     	setColor(this.getColor());
     	g.fillArc(boundRec_.x, boundRec_.y, boundRec_.width, boundRec_.height, initialAngle, sectorAngle);
+    	checkRep();
     }
 
        
@@ -70,12 +72,14 @@ public class AngleChangingSector extends Shape implements Animatable {
      */
     public void setSize(Dimension dimension)
     	throws ImpossibleSizeException{
+    	checkRep();
     	if(dimension.height <= 0 || dimension.width <= 0)
     		throw new ImpossibleSizeException(dimension.toString());
     	else {
     		boundRec_.height = dimension.height;
     		boundRec_.width = dimension.width;
     	}
+    	checkRep();
     }
 
     
@@ -85,11 +89,14 @@ public class AngleChangingSector extends Shape implements Animatable {
     //public Rectangle getBounds() {
 
     public Rectangle getBounds() {
+    	checkRep();
     	return new Rectangle(boundRec_.x, boundRec_.y, boundRec_.width, boundRec_.height);
     }
     
     public void step(Rectangle bound) {
+    	checkRep();
     	this.initialAngle++;
+    	checkRep();
     }
     
     private void checkRep() {

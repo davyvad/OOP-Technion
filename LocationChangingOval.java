@@ -39,7 +39,7 @@ public class LocationChangingOval extends LocationChangingShape{
 	public LocationChangingOval(Point location, Color color, int width, int height) {
 		super(location, color);
 		this.dimension = new Dimension(width, height);
-		//check rep?
+		checkRep();
 	}
 	
 	/**
@@ -51,11 +51,18 @@ public class LocationChangingOval extends LocationChangingShape{
   	g.setColor(this.getColor());
   	Rectangle dim = getBounds();
   	g.fillOval(dim.x, dim.y, dim.width, dim.height);
-  	
+  	checkRep();
   }
   
 	public Dimension getDimension() {
 		return (Dimension) dimension.clone();
 	}
 
+
+  private void checkRep() {
+  	assert getColor() != null;
+  	assert getLocation() != null;
+  	assert this.dimension.getHeight() >= 0;
+  	assert this.dimension.getWidth() >= 0;
+  }
 }

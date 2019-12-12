@@ -22,7 +22,7 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
 	
 	// Representation Invariant
 	// location != null , color != null, horizontal and vertical velocity are integers
-	// 
+	// number >= 0 , id >= 0
   private static int number = 0;
   private int id;
 
@@ -46,6 +46,7 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
 		super(location, color, width, height);
 		id = number;
 		number++;
+		checkRep();
 	}
 	
 	/**
@@ -59,7 +60,7 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
   	Dimension size = getDimension();
   	g.fillOval(dim.x, dim.y, (int)size.getWidth(), (int)size.getHeight());
    	g.drawString(((Integer)(id)).toString() , (dim.x +dim.width)/2, (dim.y + dim.height)/2);
-  	
+  	checkRep();
   }
   public int getId() {
   	return id;
@@ -67,6 +68,13 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
   
   public int getNumberOfOvals() {
   	return number;
+  }
+  
+  private void checkRep() {
+  	assert getColor() != null;
+  	assert getLocation() != null;
+  	assert id >= 0;
+  	assert number >= 0;
   }
 
 }

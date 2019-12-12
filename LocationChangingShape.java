@@ -53,7 +53,7 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
 		
 		//Set shape dimension:
 		boundRec_ = new Rectangle(location.x , location.y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		
+		checkRep();
 		}
 
 
@@ -137,6 +137,7 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
     	this.boundRec_.x = this.getLocation().x;
     	this.boundRec_.y = this.getLocation().y;
     	//System.out.println("velocityx: "+vx);
+    	checkRep();
     }
     
     /**
@@ -156,6 +157,7 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
     		boundRec_.height = dimension.height;
     		boundRec_.width = dimension.width;
     	}
+    	checkRep();
     }
 
     

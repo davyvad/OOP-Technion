@@ -39,8 +39,7 @@ public class LocationChangingRectangle extends LocationChangingShape{
 	public LocationChangingRectangle(Point location, Color color, int width, int height) {
 		super(location, color);
 		this.dimension = new Dimension(width, height);
-//		super.setSize(this.dimension);
-		//checkRep?
+		checkRep();
 	}
 	
 	/**
@@ -53,7 +52,7 @@ public class LocationChangingRectangle extends LocationChangingShape{
   	Rectangle dim = getBounds();
   	Dimension size = getDimension();
   	g.fillRect(dim.x, dim.y, (int)size.getWidth(), (int)size.getHeight());
-  	
+  	checkRep();
   }
 
   /**
@@ -72,10 +71,18 @@ public class LocationChangingRectangle extends LocationChangingShape{
   		throw new ImpossibleSizeException();
 
   	dimension.setSize(dimension);	
-  	//checkRep
+  	checkRep();
   }
   
 	public Dimension getDimension() {
 		return (Dimension) dimension.clone();
 	}
+	
+  private void checkRep() {
+  	assert getColor() != null;
+  	assert getLocation() != null;
+  	assert this.dimension.getHeight() >= 0;
+  	assert this.dimension.getWidth() >= 0;
+  }
+  
 }

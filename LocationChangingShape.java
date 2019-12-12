@@ -115,22 +115,28 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
     			boundRec_.x+ boundRec_.width > bound.x+ bound.width ||
     			boundRec_.x +velocityX_ < bound.x || 											// And now, conditions if adding velocityX moves shape boundaries out of bound
     			boundRec_.x+ boundRec_.width + velocityX_> bound.x + bound.width;
-    	boolean heightOutOfBound = boundRec_.y < bound.y || 
-    			boundRec_.y+ boundRec_.height > bound.y+ bound.height ||
-    			boundRec_.y +velocityY_ < bound.y || 											// And now, conditions if adding velocityX moves shape boundaries out of bound
-    			boundRec_.y+ boundRec_.height + velocityY_> bound.y+ bound.height;
+    	boolean heightOutOfBound = boundRec_.y > bound.y || 
+    			boundRec_.y+ boundRec_.height < bound.y+ bound.height ||
+    			boundRec_.y +velocityY_ > bound.y || 											// And now, conditions if adding velocityX moves shape boundaries out of bound
+    			boundRec_.y+ boundRec_.height + velocityY_< bound.y+ bound.height;
     	
     	if(heightOutOfBound || witdhOutOfBound) {
     		Point centerBound = new Point(bound.x + bound.width/2 , bound.y+ bound.height/2);
     		Point centerBoundRec = new Point(boundRec_.x + boundRec_.width/2 , boundRec_.y+ boundRec_.height/2);
 
-    		if(centerBoundRec.x < centerBound.x && vx < 0)
-    			vx = -vx;
-    		if(centerBoundRec.y < centerBound.y && vy < 0)
-    			vy = -vy;
+    		if(centerBoundRec.x < centerBound.x && vx < 0) {
+    			velocityX_= -vx;
+    			vx = - vx;
+    		}
+    		if(centerBoundRec.y < centerBound.y && vy < 0) {
+    			velocityY_ = -vy;
+    			vy = - vy;
+    		}
     	}
     	this.setLocation(new Point(getLocation().x + vx , getLocation().y +vy));
-    	
+    	this.boundRec_.x = this.getLocation().x;
+    	this.boundRec_.y = this.getLocation().y;
+    	//System.out.println("velocityx: "+vx);
     }
     
     /**
@@ -167,4 +173,6 @@ public abstract class LocationChangingShape extends Shape implements Animatable 
     	assert getLocation() != null;
     	assert boundRec_ !=null;
     }
+   
+
 }

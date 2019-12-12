@@ -27,19 +27,19 @@ public class LocationChangingRoundedRetangle extends LocationChangingRectangle{
 	private static final int DEFAULT_ARC_WIDTH = 3;
 	private static final int DEFAULT_ARC_HEIGHT = 3;
 
+	
 	public static void main(String[] args) {
 		Point p = new Point(2, 3);
 		Color c = new Color(2,3,1);
-		LocationChangingShape sh = new LocationChangingRectangle(p,c);
+		LocationChangingShape sh = new LocationChangingRectangle(p,c,2,3);
 		Point pp = sh.getLocation();
 		Color cc = sh.getColor();
 		System.out.println("point , color are : " + pp.toString() + cc.toString());
 		System.out.println("Dimension : " + sh.getBounds().toString());
 	}
 	
-	public LocationChangingRoundedRetangle(Point location, Color color) {
-		super(location, color);
-		
+	public LocationChangingRoundedRetangle(Point location, Color color, int width, int height) {
+		super(location, color, width, height);
 	}
 	
 	/**
@@ -48,9 +48,10 @@ public class LocationChangingRoundedRetangle extends LocationChangingRectangle{
    */
   public void draw(Graphics g) {
   	g = (Graphics2D) g;
-  	setColor(this.getColor());
+  	g.setColor(this.getColor());
   	Rectangle dim = getBounds();
-  	g.fillRoundRect(dim.x, dim.y, dim.width, dim.height, DEFAULT_ARC_WIDTH, DEFAULT_ARC_HEIGHT);
+  	Dimension size = getDimension();
+  	g.fillRoundRect(dim.x, dim.y, (int)size.getWidth(), (int)size.getHeight(), DEFAULT_ARC_WIDTH, DEFAULT_ARC_HEIGHT);
   	
   }
 

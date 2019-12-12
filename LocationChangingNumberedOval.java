@@ -29,21 +29,21 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
 	public static void main(String[] args) {
 		Point p = new Point(2, 3);
 		Color c = new Color(2,3,1);
-		LocationChangingNumberedOval sh = new LocationChangingNumberedOval(p,c);
+		LocationChangingNumberedOval sh = new LocationChangingNumberedOval(p,c,2,3);
 		Point pp = sh.getLocation();
 		Color cc = sh.getColor();
 		System.out.println("point , color are : " + pp.toString() + cc.toString());
 		System.out.println("Dimension : " + sh.getBounds().toString());
 		System.out.println("number , id : " + sh.id +" "+ sh.number);
 		
-		LocationChangingNumberedOval sh2 = new LocationChangingNumberedOval(p,c);
+		LocationChangingNumberedOval sh2 = new LocationChangingNumberedOval(p,c,2,3);
 		System.out.println("number , id : " + sh2.id +" "+ sh2.number);
 
 
 	}
 	
-	public LocationChangingNumberedOval(Point location, Color color) {
-		super(location, color);
+	public LocationChangingNumberedOval(Point location, Color color, int width, int height) {
+		super(location, color, width, height);
 		id = number;
 		number++;
 	}
@@ -54,10 +54,11 @@ public class LocationChangingNumberedOval extends LocationChangingOval {
    */
   public void draw(Graphics g) {
   	g = (Graphics2D) g;
-  	setColor(this.getColor());
+  	g.setColor(this.getColor());
   	Rectangle dim = getBounds();
-  	g.fillOval(dim.x, dim.y, dim.width, dim.height);
-  	g.drawString(((Integer)(id)).toString() , (dim.x +dim.width)/2, (dim.y + dim.height)/2);
+  	Dimension size = getDimension();
+  	g.fillOval(dim.x, dim.y, (int)size.getWidth(), (int)size.getHeight());
+   	g.drawString(((Integer)(id)).toString() , (dim.x +dim.width)/2, (dim.y + dim.height)/2);
   	
   }
   public int getId() {

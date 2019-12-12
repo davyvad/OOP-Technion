@@ -18,11 +18,12 @@ public class Animator extends JFrame implements ActionListener {
 	private static final int WINDOW_WIDTH = 600;
 	private static final int WINDOW_HEIGHT = 400;
 
-	private static final int SHAPE_MIN_WIDTH = 1/10*WINDOW_WIDTH;
-	private static final int SHAPE_MAX_WIDTH = 3/10*WINDOW_WIDTH;
-	private static final int SHAPE_MIN_HEIGHT = 1/10*WINDOW_HEIGHT;
-	private static final int SHAPE_MAX_HEIGHT = 3/10*WINDOW_HEIGHT;
-	private static final int COLOR_RANGE = 16777215; //decimal value for 24 bits of 1
+	private static final int SHAPE_MIN_WIDTH = 1*WINDOW_WIDTH/10;
+	private static final int SHAPE_MAX_WIDTH = 3*WINDOW_WIDTH/10;
+	private static final int SHAPE_MIN_HEIGHT = 1*WINDOW_HEIGHT/10;
+	private static final int SHAPE_MAX_HEIGHT = 3*WINDOW_HEIGHT/10;
+	private static final int COLOR_RANGE = 255; //decimal value for 24 bits of 1
+	private static final int ANGLE = 360;
 	// graphical components
 	private JMenuBar menuBar;
 	private JMenu fileMenu, insertMenu, helpMenu;
@@ -43,6 +44,7 @@ public class Animator extends JFrame implements ActionListener {
 	 * 			of all shapes in this 25 times per second while animation
 	 * 			checkbox is selected.
 	 */
+
 	public Animator() {
 		super("Animator");
 		shapes = new ArrayList<Animatable>();
@@ -62,7 +64,7 @@ public class Animator extends JFrame implements ActionListener {
                 	Iterator<Animatable> iter = shapes.iterator();
                 	while( iter.hasNext()) {
                 		Animatable current = iter.next();
-                		current.step(getBounds());
+                		current.step(mainPanel.getBounds());
                 	}
                 	
 
@@ -197,19 +199,21 @@ public class Animator extends JFrame implements ActionListener {
 			int y = random.nextInt(mainPanel.getBounds().height-height);
 			
 			Point location = new Point(x, y);
-			Color color = new Color(random.nextInt(COLOR_RANGE));
+			Color color = new Color(random.nextInt(COLOR_RANGE), random.nextInt(COLOR_RANGE), random.nextInt(COLOR_RANGE));
+			//System.out.println(color.toString() + "and location: " + location.toString());
 			
 			if(source.equals(rectangleItem)) {
-				shapes.add(new LocationChangingRectangle(location, color));
+				shapes.add(new LocationChangingRectangle(location, color, width, height));
 			}else if(source.equals(roundedRectangleItem)) {
-				shapes.add(new LocationChangingRectangle(location, color));
+				shapes.add(new LocationChangingRoundedRetangle(location, color, width, height));
 			}else if(source.equals(ovalItem)) {
-				shapes.add(new LocationChangingRectangle(location, color));
+				shapes.add(new LocationChangingOval(location, color, width, height));
 			}else if(source.equals(numberedOvalItem)) {
-				shapes.add(new LocationChangingRectangle(location, color));
-			}else if(source.equals(sectorItem)) {
-				shapes.add(new LocationChangingRectangle(location, color));
+				shapes.add(new LocationChangingNumberedOval(location, color, width, height));
+			}else{
+				shapes.add(new AngleChangingSector(location, color, random.nextInt(ANGLE), random.nextInt(ANGLE)));
 			}
+			
 			repaint();
 		}
 

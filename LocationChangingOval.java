@@ -23,19 +23,23 @@ public class LocationChangingOval extends LocationChangingShape{
 	// Representation Invariant
 	// location != null , color != null, horizontal and vertical velocity are integers
 	// 
+	
+	private Dimension dimension;
+	
 	public static void main(String[] args) {
 		Point p = new Point(2, 3);
 		Color c = new Color(2,3,1);
-		LocationChangingShape sh = new LocationChangingOval(p,c);
+		LocationChangingShape sh = new LocationChangingOval(p,c,2,3);
 		Point pp = sh.getLocation();
 		Color cc = sh.getColor();
 		System.out.println("point , color are : " + pp.toString() + cc.toString());
 		System.out.println("Dimension : " + sh.getBounds().toString());
 	}
 	
-	public LocationChangingOval(Point location, Color color) {
+	public LocationChangingOval(Point location, Color color, int width, int height) {
 		super(location, color);
-		
+		this.dimension = new Dimension(width, height);
+		//check rep?
 	}
 	
 	/**
@@ -44,10 +48,14 @@ public class LocationChangingOval extends LocationChangingShape{
    */
   public void draw(Graphics g) {
   	g = (Graphics2D) g;
-  	setColor(this.getColor());
+  	g.setColor(this.getColor());
   	Rectangle dim = getBounds();
   	g.fillOval(dim.x, dim.y, dim.width, dim.height);
   	
   }
+  
+	public Dimension getDimension() {
+		return (Dimension) dimension.clone();
+	}
 
 }

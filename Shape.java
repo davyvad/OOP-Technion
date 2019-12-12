@@ -48,6 +48,7 @@ public abstract class Shape implements Cloneable {
      */
     public void setLocation(Point location) {
     	this.location = (Point)location.clone();
+    	
     }
 
 
@@ -92,7 +93,6 @@ public abstract class Shape implements Cloneable {
      * @effects Sets color of this.
      */
     public void setColor(Color color) {
-    	
     	this.color = color;
     	checkRep();
     }

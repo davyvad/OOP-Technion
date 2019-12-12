@@ -3,7 +3,9 @@ package homework1;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 /**
  * Main application class for exercise #1.
  * This application allows the user to add shapes to a graphical window and
@@ -16,6 +18,11 @@ public class Animator extends JFrame implements ActionListener {
 	private static final int WINDOW_WIDTH = 600;
 	private static final int WINDOW_HEIGHT = 400;
 
+	private static final int SHAPE_MIN_WIDTH = 1/10*WINDOW_WIDTH;
+	private static final int SHAPE_MAX_WIDTH = 3/10*WINDOW_WIDTH;
+	private static final int SHAPE_MIN_HEIGHT = 1/10*WINDOW_HEIGHT;
+	private static final int SHAPE_MAX_HEIGHT = 3/10*WINDOW_HEIGHT;
+	private static final int COLOR_RANGE = 16777215; //decimal value for 24 bits of 1
 	// graphical components
 	private JMenuBar menuBar;
 	private JMenu fileMenu, insertMenu, helpMenu;
@@ -28,7 +35,7 @@ public class Animator extends JFrame implements ActionListener {
 	// shapes that have been added to this
 	
 	// TODO: Add and initialize a container of shapes called shapes.
-	
+	private ArrayList<Animatable> shapes;
 
 	/**
 	 * @modifies this
@@ -38,7 +45,8 @@ public class Animator extends JFrame implements ActionListener {
 	 */
 	public Animator() {
 		super("Animator");
-
+		shapes = new ArrayList<Animatable>();
+		
 		// create main panel and menubar
 		mainPanel = (JPanel)createMainPanel();
 		getContentPane().add(mainPanel);
@@ -51,7 +59,11 @@ public class Animator extends JFrame implements ActionListener {
                 if (animationCheckItem.isSelected()) {
                 	// TODO: Add code for making one animation step for all
                 	// 		 shapes in this
-
+                	Iterator<Animatable> iter = shapes.iterator();
+                	while( iter.hasNext()) {
+                		Animatable current = iter.next();
+                		current.step(getBounds());
+                	}
                 	
 
             		repaint();	// make sure that the shapes are redrawn
@@ -132,8 +144,11 @@ public class Animator extends JFrame implements ActionListener {
 		super.paint(g);
 
 		//TODO: Add code for drawing all shapes in this
-		
-		
+		Iterator<Animatable> iterator = shapes.iterator();
+		while(iterator.hasNext()) {
+			Shape current = (Shape) iterator.next();
+			current.draw(getContentPane().getGraphics());
+		}
 	}
 
 
@@ -170,8 +185,31 @@ public class Animator extends JFrame implements ActionListener {
 			//		 its location and size are randomly selected &&
 			//		 1/10*WINDOW_WIDTH <= shape.width < 3/10*WINDOW_WIDTH &&
 			//		 1/10*WINDOW_HEIGHT <= shape.height < 3/10*WINDOW_HEIGHT
-		
 			
+			Random random = new Random();
+			
+			//random shape size
+			int width = SHAPE_MIN_WIDTH + random.nextInt(SHAPE_MAX_WIDTH-SHAPE_MIN_WIDTH);
+			int height = SHAPE_MIN_HEIGHT + random.nextInt(SHAPE_MAX_HEIGHT-SHAPE_MIN_HEIGHT);
+			
+			//random shape location
+			int x = random.nextInt(mainPanel.getBounds().width-width);
+			int y = random.nextInt(mainPanel.getBounds().height-height);
+			
+			Point location = new Point(x, y);
+			Color color = new Color(random.nextInt(COLOR_RANGE));
+			
+			if(source.equals(rectangleItem)) {
+				shapes.add(new LocationChangingRectangle(location, color));
+			}else if(source.equals(roundedRectangleItem)) {
+				shapes.add(new LocationChangingRectangle(location, color));
+			}else if(source.equals(ovalItem)) {
+				shapes.add(new LocationChangingRectangle(location, color));
+			}else if(source.equals(numberedOvalItem)) {
+				shapes.add(new LocationChangingRectangle(location, color));
+			}else if(source.equals(sectorItem)) {
+				shapes.add(new LocationChangingRectangle(location, color));
+			}
 			repaint();
 		}
 
